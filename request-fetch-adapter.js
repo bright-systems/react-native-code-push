@@ -1,5 +1,6 @@
 const packageJson = require("./package.json");
 const staticConfig = require('../../config/application').default
+const deviceLog = require('react-native-device-log').default
 
 module.exports = {
   async request(verb, url, requestBody, callback) {
@@ -27,7 +28,7 @@ module.exports = {
       newUrl = staticConfig.codepush.metadataUrl + urlVars
     }
 
-    console.log('newUrl', newUrl)
+    deviceLog.debug('codepush metadata url', newUrl)
 
     try {
       const response = await fetch(url, {
