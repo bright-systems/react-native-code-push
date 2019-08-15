@@ -1,4 +1,5 @@
 const packageJson = require("./package.json");
+const staticConfig = require('../../config/application').default
 
 module.exports = {
   async request(verb, url, requestBody, callback) {
@@ -18,6 +19,15 @@ module.exports = {
     if (requestBody && typeof requestBody === "object") {
       requestBody = JSON.stringify(requestBody);
     }
+
+    let newUrl = url
+    if (staticConfig.codepush.metadataUrl){
+      console.log('rewriting codepush metadataUrl')
+      const urlVars = url.substring(url.indexOf('?'), url.length)
+      newUrl = staticConfig.codepush.metadataUrl + urlVars
+    }
+
+    console.log('newUrl', newUrl)
 
     try {
       const response = await fetch(url, {
