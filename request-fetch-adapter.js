@@ -31,7 +31,7 @@ module.exports = {
     deviceLog.debug('codepush metadata url', newUrl)
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(newUrl, {
         method: getHttpMethodName(verb),
         headers: headers,
         body: requestBody
