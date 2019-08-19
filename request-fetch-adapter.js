@@ -24,11 +24,16 @@ module.exports = {
     let newUrl = url
     if (staticConfig.codepush.metadataUrl){
       console.log('rewriting codepush metadataUrl')
-      const urlVars = url.substring(url.indexOf('?'), url.length)
-      newUrl = staticConfig.codepush.metadataUrl + urlVars
+      let urlVars = ''
+      if (url.indexOf('?') > -1){
+         urlVars = url.substring(url.indexOf('?'), url.length)
+         newUrl = staticConfig.codepush.metadataUrl + urlVars
+         deviceLog.debug('codepush metadata url', newUrl)
+      } else { 
+        deviceLog.debug('skipping url rewrite', newUrl)
+      }
+      
     }
-
-    deviceLog.debug('codepush metadata url', newUrl)
 
     try {
       const response = await fetch(newUrl, {
